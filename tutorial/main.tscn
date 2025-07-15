@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://nk40obtr7k6p"]
+[gd_scene load_steps=8 format=3 uid="uid://nk40obtr7k6p"]
 
 [ext_resource type="Script" uid="uid://bwcijpbm3g0jw" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cwcs6o0al7hck" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dp8wido3nuuyr" path="res://mob.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dqpi3eeo8phx" path="res://ui.tscn" id="4_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://lvgmhhvh7m6f" path="res://dodge_the_creeps_2d_assets/art/House In a Forest Loop.ogg" id="5_lquwl"]
+[ext_resource type="AudioStream" uid="uid://dydttquvodfck" path="res://dodge_the_creeps_2d_assets/art/gameover.wav" id="6_7mycd"]
 
 [sub_resource type="Curve2D" id="Curve2D_0xm2m"]
 _data = {
@@ -13,6 +16,14 @@ point_count = 5
 [node name="Main" type="Node"]
 script = ExtResource("1_0xm2m")
 mob_scene = ExtResource("2_h2yge")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.35471, 0.0803097, 0.0964756, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 
@@ -33,7 +44,17 @@ curve = SubResource("Curve2D_0xm2m")
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
 
+[node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_lquwl")
+parameters/looping = true
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7mycd")
+
 [connection signal="hit" from="Player" to="." method="game_over"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]

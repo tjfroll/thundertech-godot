@@ -23,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.35471, 0.0803097, 0.0964756, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 
@@ -48,10 +48,13 @@ curve = SubResource("Curve2D_0xm2m")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_lquwl")
+pitch_scale = 0.5
 parameters/looping = true
 
 [node name="Death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_7mycd")
+volume_db = 13.038
+pitch_scale = 0.38
 
 [connection signal="hit" from="Player" to="." method="game_over"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
